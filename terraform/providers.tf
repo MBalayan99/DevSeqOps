@@ -6,13 +6,10 @@ terraform {
     }
   }
 
-  backend "gcs" {
-    bucket = "my-terraform-backend"
-    prefix = "gke-cluster"
-  }
 }
 
 provider "google" {
   project = var.project_id
   region  = var.region
+   credentials = file("/home/mher/DevSeqOps/terraform/service-account.json")
 }
