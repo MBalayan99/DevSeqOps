@@ -6,10 +6,10 @@ terraform {
     }
   }
 
- # backend "gcs" {
-  #  bucket = "my-terraform-backend"
-   # prefix = "terraform/state"
-  #}
+  backend "gcs" {
+    bucket = "deadevsecopse-2025"
+    prefix = "terraform/state"
+  }
 }
 
 provider "google" {
