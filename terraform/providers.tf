@@ -6,10 +6,10 @@ terraform {
     }
   }
 
-  backend "gcs" {
-    bucket = "my-terraform-backend"
-    prefix = "gke-cluster"
-  }
+  # backend "gcs" {
+  #   bucket = "my-terraform-backend"
+  #   prefix = "gke-cluster"
+  # }
 }
 
 provider "google" {
