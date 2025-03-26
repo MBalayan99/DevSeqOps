@@ -8,4 +8,5 @@ resource "google_compute_subnetwork" "private_subnet" {
   network       = google_compute_network.vpc.name
   ip_cidr_range = "10.0.1.0/24"
   region        = var.region
+  project     = "devsecops-454508"
 }
