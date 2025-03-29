@@ -1,7 +1,7 @@
 output "network" {
-  value = google_compute_network.vpc.name
+  value = google_compute_network.vpc.self_link
 }
 
 output "subnetwork" {
-  value = google_compute_subnetwork.private_subnet.name
+  value = google_compute_subnetwork.private_subnet.self_link
 }
