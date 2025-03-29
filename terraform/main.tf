@@ -11,4 +11,5 @@ module "gke" {
 
 module "gar" {
   source = "./gar"
+  depends_on = [ module.vpc ]
 }
