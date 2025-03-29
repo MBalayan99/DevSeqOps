@@ -2,6 +2,15 @@ resource "google_container_cluster" "primary" {
   name     = var.cluster_name
   location = var.region
 
+  network    = var.network
+  subnetwork = var.subnetwork
+
+  private_cluster_config {
+    enable_private_nodes    = true  
+    enable_private_endpoint = false  
+    master_ipv4_cidr_block  = "172.16.0.16/28"  
+  }
+
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
