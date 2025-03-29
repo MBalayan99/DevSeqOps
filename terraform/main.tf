@@ -7,6 +7,7 @@ module "gke" {
   subnetwork = module.vpc.network
   network = module.vpc.subnetwork
   depends_on = [ module.vpc ]
+  
 }
 
 module "gar" {
