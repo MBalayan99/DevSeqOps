@@ -5,11 +5,19 @@ resource "google_container_cluster" "primary" {
 
   network    = var.network
   subnetwork = var.subnetwork
+  
 
   private_cluster_config {
     enable_private_nodes    = true  
-    enable_private_endpoint = false  
+    enable_private_endpoint = true  
     master_ipv4_cidr_block  = "172.16.0.16/28"  
+  }
+
+  master_authorized_networks_config {
+    cidr_blocks {
+      cidr_block   = "172.16.0.16/28"   
+      display_name = "Office Network"  #change name
+    }
   }
 
   # We can't create a cluster with no node pool defined, but we want to only use
