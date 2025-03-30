@@ -4,13 +4,20 @@ module "network" {
 
 module "gke" {
   source = "./gke"
-  network = module.vpc.network
-  subnetwork = module.vpc.subnetwork
-  depends_on = [ module.vpc ]
+  network = module.network.network
+  subnetwork = module.network.subnetwork
+  depends_on = [ module.network ]
   
 }
 
 module "gar" {
   source = "./gar"
+  depends_on = [ module.network ]
+}
+
+module "gce" {
+  source = "./gce"
+  network = module.network.network
+  subnetwork = module.network.subnetwork
   depends_on = [ module.network ]
 }
