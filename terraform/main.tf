@@ -1,5 +1,5 @@
-module "vpc" {
-  source = "./vpc"
+module "network" {
+  source = "./network"
 }
 
 module "gke" {
@@ -12,5 +12,5 @@ module "gke" {
 
 module "gar" {
   source = "./gar"
-  depends_on = [ module.vpc ]
+  depends_on = [ module.network ]
 }
