@@ -2,3 +2,4 @@
 *.terraform.lock.hcl
 service-account.jsonterraform/service-account.json
 terraform.tfstate
+*.ovpn
