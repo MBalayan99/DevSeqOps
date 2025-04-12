@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: workload
+          # image: us-central1-docker.pkg.dev/devsecops-454508/docker-repo/hello-nginx:latest
+          image: nginx
+          ports:
+            - name: http
+              containerPort: 8080
+          

@@ -2,6 +2,8 @@ sudo apt update
 sudo apt install openvpn easy-rsa -y
 
 # set some needed variables like this export EASYRSA_BATCH=1
+make-cadir ~/openvpn-ca
+cd ~/openvpn-ca
 
 export EASYRSA_BATCH=1
 ./easyrsa init-pki
@@ -20,10 +22,10 @@ sudo nano /etc/openvpn/server.conf
 # port 1194
 # proto udp
 # dev tun
-# ca /etc/openvpn/pki/ca.crt
-# cert /etc/openvpn/pki/issued/server.crt
-# key /etc/openvpn/pki/private/server.key
-# dh /etc/openvpn/pki/dh.pem
+# ca /etc/openvpn/ca.crt
+# cert /etc/openvpn/server.crt
+# key /etc/openvpn/server.key
+# dh /etc/openvpn/dh.pem
 # auth SHA256
 # tls-auth /etc/openvpn/ta.key 0
 # cipher AES-256-CBC
@@ -40,7 +42,7 @@ sudo nano /etc/openvpn/server.conf
 # status /var/log/openvpn-status.log
 # log /var/log/openvpn.log
 # verb 3
-# crl-verify /etc/openvpn/pki/crl.pem
+# crl-verify /etc/openvpn/crl.pem
 
 
 sudo cp ~/openvpn-ca/pki/ca.crt /etc/openvpn/
