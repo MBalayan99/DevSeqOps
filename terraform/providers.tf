@@ -1,3 +1,4 @@
+##define provioders
 terraform {
   required_providers {
     google = {
