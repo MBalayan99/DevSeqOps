@@ -32,3 +32,9 @@ variable "subnetwork" {
   description = "The name of the subnetwork."
   type        = string
 }
+
+variable "sa" {
+  description = "Service Account for gke."
+  type        = string
+}
+

@@ -6,6 +6,7 @@ module "gke" {
   source = "./gke"
   network = module.network.network
   subnetwork = module.network.subnetwork
+  sa = module.iam.sa
   depends_on = [ module.network ]
   
 }
@@ -20,4 +21,8 @@ module "gce" {
   network = module.network.network
   subnetwork = module.network.subnetwork
   depends_on = [ module.network ]
+}
+
+module "iam" {
+  source = "./iam"
 }
