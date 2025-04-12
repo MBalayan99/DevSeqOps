@@ -15,5 +15,5 @@ terraform {
 provider "google" {
   project     = "devsecops-454508"
   region      = "us-central1"
- # credentials = file("/home/mher/DevSeqOps/terraform/service-account.json") 
+ #### credentials = file("/home/mher/DevSeqOps/terraform/service-account.json") 
 }
