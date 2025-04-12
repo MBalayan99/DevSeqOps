@@ -21,7 +21,7 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'  # Fixed missing closing brace
+        credentials_json: '${{ secrets.GOOGLE_CREDS }}'  # Make sure the secret name is correct
 
     - name: Set up gcloud CLI
       uses: google-github-actions/setup-gcloud@v1
