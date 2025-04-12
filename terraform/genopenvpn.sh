@@ -20,7 +20,7 @@ export EASYRSA_BATCH=1
 openvpn --genkey secret ta.key
 ./easyrsa gen-crl
 
-./easyrsa gen-req developer1 nopass
+./easyrsa gen-req developer1 
 ./easyrsa sign-req client developer1
 
 # Move files to /etc/openvpn

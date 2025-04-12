@@ -6,7 +6,7 @@ resource "google_container_cluster" "primary" {
   network    = var.network
   subnetwork = var.subnetwork
   
-
+  
   private_cluster_config {
     enable_private_nodes    = true  
     enable_private_endpoint = true  
@@ -34,10 +34,12 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   project     = "devsecops-454508"
   cluster    = google_container_cluster.primary.name
   node_count = var.node_count
+  
 
   node_config {
     # preemptible  = true
     machine_type = "e2-medium"
+    service_account = "k8s-sa@devsecops-454508.iam.gserviceaccount.com"
     # Need to be changed
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     # service_account = google_service_account.default.email
