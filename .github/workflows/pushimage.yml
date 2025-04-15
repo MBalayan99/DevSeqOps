@@ -24,7 +24,7 @@ jobs:
 
       - name: Authenticate Docker to Google Artifact Registry
         run: |
-          echo "${{ secrets.GOOGLE_CREDS }}" > key.json
+          echo "'${{ secrets.GOOGLE_CREDS }}'" > key.json
           gcloud auth activate-service-account --key-file=key.json
           gcloud config set project $PROJECT_ID
           gcloud auth configure-docker $REGION-docker.pkg.dev
