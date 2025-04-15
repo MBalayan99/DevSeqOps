@@ -24,3 +24,4 @@ services:
       - POSTGRES_USER=petclinic
       - POSTGRES_DB=petclinic
 
+##test
