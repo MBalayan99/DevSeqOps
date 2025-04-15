@@ -1,0 +1,39 @@
+name: Docker Build and Push to GAR
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: devsecops-454508
+  IMAGE_NAME: spring-app
+  GAR_NAME: gke-cluster
+  REGION: us-central1
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./spring-petclinic
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Authenticate Docker to Google Artifact Registry
+        run: |
+          echo "${{ secrets.GOOGLE_CREDS }}" > key.json
+          gcloud auth activate-service-account --key-file=key.json
+          gcloud config set project $PROJECT_ID
+          gcloud auth configure-docker $REGION-docker.pkg.dev
+
+      - name: Build Docker image (with Tini support)
+        run: |
+          docker build -t $IMAGE_NAME .
+
+      - name: Tag and Push image to GAR
+        run: |
+          docker tag $IMAGE_NAME $REGION-docker.pkg.dev/$PROJECT_ID/$GAR_NAME/$IMAGE_NAME:latest
+          docker push $REGION-docker.pkg.dev/$PROJECT_ID/$GAR_NAME/$IMAGE_NAME:latest
