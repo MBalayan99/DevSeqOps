@@ -1,39 +1,32 @@
-name: Docker Build and Push to GAR
+name: Build and Push Docker Image to GCR
 
 on:
   push:
     branches:
       - main
 
-env:
-  PROJECT_ID: devsecops-454508
-  IMAGE_NAME: spring-app
-  GAR_NAME: gke-cluster
-  REGION: us-central1
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./spring-petclinic
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Authenticate Docker to Google Artifact Registry
-        run: |
-          echo "'${{ secrets.GOOGLE_CREDS }}'" > key.json
-          gcloud auth activate-service-account --key-file=key.json
-          gcloud config set project $PROJECT_ID
-          gcloud auth configure-docker $REGION-docker.pkg.dev
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image (with Tini support)
-        run: |
-          docker build -t $IMAGE_NAME .
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDS }}' 
 
-      - name: Tag and Push image to GAR
+      - name: Configure Docker for GCR
         run: |
-          docker tag $IMAGE_NAME $REGION-docker.pkg.dev/$PROJECT_ID/$GAR_NAME/$IMAGE_NAME:latest
-          docker push $REGION-docker.pkg.dev/$PROJECT_ID/$GAR_NAME/$IMAGE_NAME:latest
+          gcloud auth configure-docker
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-image-name:${{ github.sha }}
