@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  GCP_PROJECT_ID: devsecops-454508
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -21,13 +24,20 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDS }}'
 
-      - name: Configure Docker to use gcloud credentials
-        run: gcloud auth configure-docker
+      - name: Configure Docker for GCR
+        run: |
+          gcloud auth configure-docker
         working-directory: ./spring-petclinic
 
-      - name: Build and Push Docker Image to GCR
+      - name: (Optional) Build with Maven
+        run: mvn clean package -DskipTests
+        working-directory: ./spring-petclinic
+
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: ./spring-petclinic
           push: true
-          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/spring-petclinic:${{ github.sha }}
+          tags: |
+            gcr.io/${{ env.GCP_PROJECT_ID }}/spring-petclinic:latest
+            gcr.io/${{ env.GCP_PROJECT_ID }}/spring-petclinic:${{ github.sha }}
