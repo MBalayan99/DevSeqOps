@@ -19,14 +19,15 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: '${{ secrets.GOOGLE_CREDS }}' 
+          credentials_json: '${{ secrets.GOOGLE_CREDS }}'
 
-      - name: Configure Docker for GCR
-        run: |
-          gcloud auth configure-docker
+      - name: Configure Docker to use gcloud credentials
+        run: gcloud auth configure-docker
+        working-directory: ./spring-petclinic
 
-      - name: Build and push Docker image
+      - name: Build and Push Docker Image to GCR
         uses: docker/build-push-action@v5
         with:
+          context: ./spring-petclinic
           push: true
-          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-image-name:${{ github.sha }}
+          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/spring-petclinic:${{ github.sha }}
