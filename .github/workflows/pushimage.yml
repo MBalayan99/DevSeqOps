@@ -1,9 +1,10 @@
 name: Build, Scan and Push Docker Image to GCR
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Terraform CI"]  # 👈 This is the name of the workflow it depends on
+    types:
+      - completed
 
 env:
   GCP_PROJECT_ID: devsecops-454508
@@ -11,6 +12,7 @@ env:
 
 jobs:
   build-scan-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only run if Terraform workflow succeeded
     runs-on: ubuntu-latest
 
     steps:
