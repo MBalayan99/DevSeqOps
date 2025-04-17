@@ -26,12 +26,12 @@ jobs:
     - name: Set up gcloud CLI
       uses: google-github-actions/setup-gcloud@v1
 
-    - name: Force Unlock (Optional)
-      run: terraform force-unlock -force 1744828099776725 || true
-      working-directory: terraform
-
     - name: Terraform Init
       run: terraform init
+      working-directory: terraform
+
+    - name: Force Unlock (Optional)
+      run: terraform force-unlock -force 1744828099776725 || true
       working-directory: terraform
 
     - name: Terraform Plan
