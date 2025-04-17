@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to GCR
+name: Build, Scan and Push Docker Image to GCR
 
 on:
   push:
@@ -7,9 +7,10 @@ on:
 
 env:
   GCP_PROJECT_ID: devsecops-454508
+  REGION: us-central1
 
 jobs:
-  build-and-push:
+  build-scan-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,18 +27,23 @@ jobs:
 
       - name: Configure Docker for GCR
         run: |
-          gcloud auth configure-docker
+          gcloud auth configure-docker $REGION-docker.pkg.dev
         working-directory: ./spring-petclinic
 
-      - name: (Optional) Build with Maven
-        run: mvn clean package -DskipTests
-        working-directory: ./spring-petclinic
+      - name: Build Docker image
+        run: |
+          docker build -t $REGION-docker.pkg.dev/$GCP_PROJECT_ID/docker-repo/spring-petclinic:latest ./spring-petclinic
 
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@master
         with:
-          context: ./spring-petclinic
-          push: true
-          tags: |
-            gcr.io/${{ env.GCP_PROJECT_ID }}/spring-petclinic:latest
-            gcr.io/${{ env.GCP_PROJECT_ID }}/spring-petclinic:${{ github.sha }}
+          image-ref: ${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/docker-repo/spring-petclinic:latest
+          format: table
+          exit-code: 1
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH
+
+      - name: Push Docker image to GCR
+        run: |
+          docker push $REGION-docker.pkg.dev/$GCP_PROJECT_ID/docker-repo/spring-petclinic:latest
