@@ -1,0 +1,18 @@
+#!/usr/bin/expect -f
+
+# Set the password you want to use
+set password "123456789ABCabc"
+
+# Start the Easy-RSA command
+spawn ./easyrsa gen-req developer1
+
+# Wait for the prompt asking for the password
+expect "Enter PEM pass phrase:" {
+    send "$password\r"
+}
+
+# Wait for the confirmation of the private key generation
+expect "Your new private key has been successfully generated" {
+    # Key has been generated, exit
+    exit
+}
