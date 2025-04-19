@@ -25,3 +25,5 @@ USER appuser
 RUN chmod 500 app.jar
 
 EXPOSE 8080
+
+CMD ["java", "-jar", "app.jar"]
