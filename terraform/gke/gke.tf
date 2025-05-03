@@ -16,7 +16,7 @@ resource "google_container_cluster" "primary" {
   master_authorized_networks_config {
     cidr_blocks {
       cidr_block   = "172.16.0.16/28"   
-      display_name = "Office Network"  #change name
+      display_name = "Office Network"  
     }
   }
 
@@ -37,14 +37,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   
 
   node_config {
-    # preemptible  = true
     machine_type = "e2-medium"
     service_account = "k8s-sa@devsecops-454508.iam.gserviceaccount.com"
-    # Need to be changed
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    # service_account = google_service_account.default.email
-    # oauth_scopes    = [
-    #   "https://www.googleapis.com/auth/cloud-platform"
-    # ]
   }
 }
