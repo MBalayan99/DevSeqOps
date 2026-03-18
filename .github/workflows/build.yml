@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Важно для корректного анализа истории
+          fetch-depth: 0  
           
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
