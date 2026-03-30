@@ -24,7 +24,7 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.4.0</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <groupId>org.springframework.samples</groupId>
@@ -45,7 +45,7 @@
 
     <!-- Web dependencies -->
     <webjars-locator.version>1.0.1</webjars-locator.version>
-    <webjars-bootstrap.version>5.3.3</webjars-bootstrap.version>
+    <webjars-bootstrap.version>5.3.7</webjars-bootstrap.version>
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
     <checkstyle.version>10.20.1</checkstyle.version>
@@ -466,7 +466,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                     <pluginExecution>
@@ -479,7 +479,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                     <pluginExecution>
@@ -492,7 +492,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                   </pluginExecutions>
